@@ -5,7 +5,6 @@
 import sys
 from sparser import *
 
-a()
 '''
 try:
 	path = sys.argv[1]
@@ -22,5 +21,4 @@ except Exception:
 # for now, programs are taken by text input due for debugging
 program = ".xYz.yZ"
 
-print(43)
 print(split_into_st(program))

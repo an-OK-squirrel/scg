@@ -41,5 +41,3 @@ def split_into_st(program): # split_into_st("apple") # ['a', 'p', 'p', 'l', 'e']
 	return result
 
 
-def a():
-	print("hi")
