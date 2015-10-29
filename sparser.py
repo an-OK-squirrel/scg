@@ -17,18 +17,21 @@ def split_into_st(program): # split_into_st("apple") # ['a', 'p', 'p', 'l', 'e']
 		char = program[char_index]
 		print(char, token_type)
 		if token_type == 0:
-			if char in WHITESPACE:
+			if char in WHITESPACE: # Y U whitespace in codegolf?
 				result.append(token)
 				token = ""
 				token_type = 0
-			if char in OPERATORS:
+			elif char in OPERATORS:
 				token += char
 				result.append(token)
 				token = ""
 				token_type = 0
-			if char == ".":
+			elif char == ".":
 				token += "."
 				token_type = 1
+			elif char in DIGITS:
+				token += char
+				token_type = 2
 		elif token_type == 1:
 			token += char
 			print(token)
@@ -36,8 +39,18 @@ def split_into_st(program): # split_into_st("apple") # ['a', 'p', 'p', 'l', 'e']
 			token = ""
 			token_type = 0
 		elif token_type == 2:
-			pass
+			if char in DIGITS:
+				token += char
+			elif char == ".":
+				pass #token += char
+			else:
+				result.append(token)
+				token = ""
+				token_type = 0
+				char_index -= 1
+
 		char_index += 1
+	result.append(token)
 	return result
 
 

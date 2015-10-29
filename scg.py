@@ -19,6 +19,6 @@ except Exception:
 '''
 
 # for now, programs are taken by text input due for debugging
-program = ".xYz.yZ"
+program = ".xYz.yZ000x4"
 
 print(split_into_st(program))
