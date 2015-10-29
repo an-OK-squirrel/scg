@@ -20,6 +20,7 @@ except Exception:
 '''
 
 # for now, programs are taken by text input due for debugging
-program = "Apples*gdAG*"
+program = ".xYz.yZ"
 
+print(43)
 print(split_into_st(program))
