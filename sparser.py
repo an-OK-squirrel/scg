@@ -73,3 +73,6 @@ def parse_token_st(tokens):
     elif token_type == 2:
       result.append({'token_type': 'integer', 'token_value': int(token[0])})
   return result
+
+def fully_parse(code):
+  return parse_token_st(split_into_st(code))
