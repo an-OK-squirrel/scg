@@ -21,7 +21,7 @@ except Exception:
 
 # for now, programs are taken by text input due for debugging
 # TODO: Add like the real thing
-program = '100 100 +'
+program = '100 +'
 print(fully_parse(program))
 program = fully_parse(program)
 inter = Inter()

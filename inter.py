@@ -16,6 +16,16 @@ class Inter:
 
   def do_operator(self, op):
     if op == '+':
-      x = self.stack.pop()['value']
-      y = self.stack.pop()['value']
-      self.stack.append({'type': 'integer', 'value': x + y})
+      if len(self.stack) < 2:
+        self.error('Not enough items on stack')
+        return
+      x = self.stack.pop()
+      y = self.stack.pop()
+      if x['type'] == 'integer' and y['type'] == 'integer':
+        self.stack.append({'type': 'integer', 'value': x['value'] + y['value']})
+      else:
+        self.error("Values not integer")
+        return
+
+  def error(self, message):
+    print('Error: ' + message)
