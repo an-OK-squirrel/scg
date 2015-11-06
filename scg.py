@@ -3,6 +3,7 @@
 # whee
 
 import sys
+from inter import *
 from sparser import *
 
 '''
@@ -19,6 +20,10 @@ except Exception:
 '''
 
 # for now, programs are taken by text input due for debugging
-program = ".xYz.yZ00    0x4"
-print(split_into_st(program))
-print(parse_token_st(split_into_st(program)))
+# TODO: Add like the real thing
+program = '100 100 +'
+print(fully_parse(program))
+program = fully_parse(program)
+inter = Inter()
+inter.run_code(program)
+print(inter.stack)

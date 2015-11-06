@@ -1,11 +1,11 @@
 import re
 
-L_LETTERS = "abcdefghijklmnopqrstuvwxyz"
-U_LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-DIGITS = "0123456789"
-ALL_LETTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-OPERATORS = L_LETTERS + "+*/-"
-WHITESPACE = " \t"
+L_LETTERS = 'abcdefghijklmnopqrstuvwxyz'
+U_LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+DIGITS = '0123456789'
+ALL_LETTERS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+OPERATORS = L_LETTERS + '+*/-'
+WHITESPACE = ' \t'
 
 def does_regex_match(regex, string):
   thing = re.match(regex, string)
@@ -15,27 +15,27 @@ def does_regex_match(regex, string):
     return False
 
 def split_into_st(program):
-  # split_into_st("apple") # ['a', 'p', 'p', 'l', 'e']
+  # split_into_st('apple') # ['a', 'p', 'p', 'l', 'e']
   result = []
   char_index = 0
   token_type = 0  # 0 is none, 1 is op, 2 is num, I'll think of more later
     # actually, for that matter, what other types are there?
-  token = ""
+  token = ''
 
   while char_index < len(program):
     char = program[char_index]
     if token_type == 0:  # Token is empty
       if char in WHITESPACE:  # Y U whitespace in codegolf?
-        token = ""
+        token = ''
         token_type = 0
       elif char in OPERATORS:  # Do things
         token += char
         token_type = 1
         result.append([token, token_type])
-        token = ""  # reset
+        token = ''  # reset
         token_type = 0
-      elif char == ".":
-        token += "."
+      elif char == '.':
+        token += '.'
         token_type = 1
       elif char in DIGITS:
         token += char
@@ -43,16 +43,16 @@ def split_into_st(program):
     elif token_type == 1:
       token += char
       result.append([token, token_type])
-      token = ""
+      token = ''
       token_type = 0
     elif token_type == 2:
       if char in DIGITS:
         token += char
-      elif char == ".":
+      elif char == '.':
         pass  #token += char
       else:
         result.append([token, token_type])
-        token = ""
+        token = ''
         token_type = 0
         char_index -= 1
 
@@ -60,7 +60,7 @@ def split_into_st(program):
   result.append([token, token_type])
   return result
 
-types = ["none", "operator", ".operator"]
+types = ['none', 'operator', '.operator']
 
 def parse_token_st(tokens):
   result = []

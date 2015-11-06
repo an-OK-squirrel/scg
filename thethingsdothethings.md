@@ -12,7 +12,7 @@ So tokens are seperated in these ways:
 
 Strings are things, and they do the things
 
-they are seperatored by the mystical " symbol
+they are seperatored by the mystical ' symbol
 
 ## Variables
 
