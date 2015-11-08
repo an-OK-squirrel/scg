@@ -21,9 +21,11 @@ except Exception:
 
 # for now, programs are taken by text input due for debugging
 # TODO: Add like the real thing
-program = '100 +'
-print(fully_parse(program))
+program = '"Hello, world!"'
+
+# print(fully_parse(program))
+# print(split_into_st(program))
 program = fully_parse(program)
 inter = Inter()
 inter.run_code(program)
-print(inter.stack)
+# print(inter.stack)

@@ -18,8 +18,8 @@ def split_into_st(program):
   # split_into_st('apple') # ['a', 'p', 'p', 'l', 'e']
   result = []
   char_index = 0
-  token_type = 0  # 0 is none, 1 is op, 2 is num, I'll think of more later
-    # actually, for that matter, what other types are there?
+  token_type = 0  # 0 is none, 1 is op, 2 is num, 3 is string
+    # actually, for that matter, what other types are there? derp, lots of them
   token = ''
 
   while char_index < len(program):
@@ -40,6 +40,9 @@ def split_into_st(program):
       elif char in DIGITS:
         token += char
         token_type = 2
+      elif char == '"':
+        token_type = 3
+        token = '"'
     elif token_type == 1:
       token += char
       result.append([token, token_type])
@@ -55,6 +58,13 @@ def split_into_st(program):
         token = ''
         token_type = 0
         char_index -= 1
+    elif token_type == 3:
+      if char == '"':
+        result.append([token, token_type])  # We don't want "abc", but rather "abc
+        token = ''
+        token_type = 0
+      else:
+        token += char
 
     char_index += 1
   result.append([token, token_type])
@@ -72,6 +82,8 @@ def parse_token_st(tokens):
       result.append({'token_type': 'operator', 'token_value': token[0]})
     elif token_type == 2:
       result.append({'token_type': 'integer', 'token_value': int(token[0])})
+    elif token_type == 3:
+      result.append({'token_type': 'string', 'token_value': str(token[0][1:])})
   return result
 
 def fully_parse(code):
