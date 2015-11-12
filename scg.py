@@ -8,14 +8,13 @@ from sparser import *
 
 '''
 try:
-  path = sys.argv[1]
-  f = open(path, 'r')
-  program = f.read()
-  f.close()
-
-  print(program)
+    path = sys.argv[1]
+    f = open(path, 'r')
+    program = f.read()
+    f.close()
+    print(program)
 except Exception:
-  exit()
+    exit()
 
 '''
 
