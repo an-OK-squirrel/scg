@@ -7,19 +7,22 @@ ALL_LETTERS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 OPERATORS = L_LETTERS + '+*/-'
 WHITESPACE = ' \t'
 
+
 def does_regex_match(regex, string):
     thing = re.match(regex, string)
     try:
-        return str(thing) != None and thing.group() == string
+        return str(thing) is not None and thing.group() == string
     except AttributeError:
         return False
 
+
 def split_into_st(program):
-    # split_into_st('apple') # ['a', 'p', 'p', 'l', 'e']
+    # split_into_st('apple')
+    # ['a', 'p', 'p', 'l', 'e']
     result = []
     char_index = 0
     token_type = 0  # 0 is none, 1 is op, 2 is num, 3 is string
-        # actually, for that matter, what other types are there? derp, lots of them
+    # actually, for that matter, what other types are there? derp, lots of them
     token = ''
 
     while char_index < len(program):
@@ -52,7 +55,7 @@ def split_into_st(program):
             if char in DIGITS:
                 token += char
             elif char == '.':
-                pass  #token += char
+                pass  # token += char
             else:
                 result.append([token, token_type])
                 token = ''
@@ -60,7 +63,8 @@ def split_into_st(program):
                 char_index -= 1
         elif token_type == 3:
             if char == '"':
-                result.append([token, token_type])  # We don't want "abc", but rather "abc
+                result.append([token, token_type])  # We don't want "abc",
+                # rather "abc
                 token = ''
                 token_type = 0
             else:
@@ -72,6 +76,7 @@ def split_into_st(program):
 
 types = ['none', 'operator', '.operator']
 
+
 def parse_token_st(tokens):
     result = []
     for token in tokens:
@@ -81,10 +86,13 @@ def parse_token_st(tokens):
         elif token_type == 1:
             result.append({'token_type': 'operator', 'token_value': token[0]})
         elif token_type == 2:
-            result.append({'token_type': 'integer', 'token_value': int(token[0])})
+            result.append({'token_type': 'integer',
+                          'token_value': int(token[0])})
         elif token_type == 3:
-            result.append({'token_type': 'string', 'token_value': str(token[0][1:])})
+            result.append({'token_type': 'string',
+                          'token_value': str(token[0][1:])})
     return result
+
 
 def fully_parse(code):
     return parse_token_st(split_into_st(code))
