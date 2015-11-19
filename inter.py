@@ -46,6 +46,28 @@ class Inter:
             else:
                 self.error("Values not integer")
                 return
+        if op == '*':
+            if len(self.stack) < 2:
+                self.error('Not enough items on stack')
+                return
+            y = self.stack.pop()
+            x = self.stack.pop()
+            if x.type == 'integer' and y.type == 'integer':
+                self.stack.append(Token('integer', x.value * y.value))
+            else:
+                self.error("Values not integer")
+                return
+        if op == '/':
+            if len(self.stack) < 2:
+                self.error('Not enough items on stack')
+                return
+            y = self.stack.pop()
+            x = self.stack.pop()
+            if x.type == 'integer' and y.type == 'integer':
+                self.stack.append(Token('integer', x.value / y.value))
+            else:
+                self.error("Values not integer")
+                return
 
     def output(self):
         print("".join(list(map(lambda x: x.str_val(), self.stack))))

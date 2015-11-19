@@ -1,5 +1,7 @@
 # How the things do the things
 
+EDIT: none of this is actually true. I don't like coding at 2AM
+
 ## so like, how tokens are seperated
 ## and parsers in general
 
