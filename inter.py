@@ -33,6 +33,8 @@ class Inter:
             y = self.stack.pop()
             if x.type == 'integer' and y.type == 'integer':
                 self.stack.append(Token('integer', x.value + y.value))
+            elif x.type == 'string' or y.type == 'string':
+                self.stack.append(Token('string', x.str_val() + y.str_val()))
         if op == '-':
             if len(self.stack) < 2:
                 self.error('Not enough items on stack')
