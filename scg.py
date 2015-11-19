@@ -20,7 +20,7 @@ except Exception:
 
 # for now, programs are taken by text input due for debugging
 # TODO: Add like the real thing
-program = '"a""b"+'
+program = '"a"2+'
 
 # print(fully_parse(program))
 # print(split_into_st(program))
