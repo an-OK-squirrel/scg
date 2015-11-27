@@ -9,7 +9,7 @@ from sparser import *
 
 try:
     path = sys.argv[1]
-    f = open(path, 'r')
+    f = open(path, encoding='utf-8')
     program = f.read()
     f.close()
 except Exception:

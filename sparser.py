@@ -1,10 +1,12 @@
+# coding: utf-8
+
 import re
 
 L_LETTERS = 'abcdefghijklmnopqrstuvwxyz'
 U_LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 DIGITS = '0123456789'
 ALL_LETTERS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
-OPERATORS = L_LETTERS + '+*/-'
+OPERATORS = L_LETTERS + '+*/-='
 WHITESPACE = ' \t'
 
 
@@ -93,6 +95,21 @@ def parse_token_st(tokens):
                           'token_value': str(token[0][1:])})
     return result
 
+replace_chars = {
+    'à': ' 0'
+}
+
+
+def char_replace(code):
+    result = ""
+    for char in code:
+        if char in replace_chars:
+            result += replace_chars[char]
+        else:
+            result += char
+
+    return result
+
 
 def fully_parse(code):
-    return parse_token_st(split_into_st(code))
+    return parse_token_st(split_into_st(char_replace(code)))
