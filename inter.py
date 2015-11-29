@@ -78,6 +78,17 @@ class Inter:
                 self.stack.append(Token('integer', 1))
             else:
                 self.stack.append(Token('integer', 0))
+        if op == '^':
+            if len(self.stack) < 2:
+                self.error('Not enough items on stack')
+                return
+            exp = self.stack.pop()
+            base = self.stack.pop()
+            if exp.type == 'integer' and base.type == 'integer':
+                self.stack.append(Token('integer', base.value ** exp.value))
+            else:
+                self.error("Values not integer")
+                return
 
     def output(self):
         print("".join(list(map(lambda x: x.str_val(), self.stack))))
