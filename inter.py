@@ -89,6 +89,11 @@ class Inter:
             else:
                 self.error("Values not integer")
                 return
+        if op == ';':
+            if len(self.stack) < 1:
+                self.error('Not enough items on stack')
+                return
+            self.stack.pop()
 
     def output(self):
         print("".join(list(map(lambda x: x.str_val(), self.stack))))
