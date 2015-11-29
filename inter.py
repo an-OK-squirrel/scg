@@ -100,6 +100,11 @@ class Inter:
             self.pop()
         if op == '[':
             self.arr_markers.append(len(self.stack))
+        if op == ']':
+            amount_to_rem = -(len(self.stack) - self.arr_markers.pop())
+            new_arr = self.stack[amount_to_rem:]
+            self.stack = self.stack[:amount_to_rem]
+            self.stack.append(Token('array', new_arr))
 
     def output(self):
         print("".join(list(map(lambda x: x.str_val(), self.stack))))
@@ -114,5 +119,5 @@ class Inter:
         return self.stack.pop()
 
     def debug(self):
-        print('Stack: ' + str(self.stack))
+        print('Stack: ' + str(list(map(str, self.stack))))
         print('Array Markers: ' + str(self.arr_markers))
