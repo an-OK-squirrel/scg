@@ -4,7 +4,13 @@ class Token:
         self.value = value
 
     def str_val(self):
-        return str(self.value)
+        if self.type == 'array':
+            str_vals = ''
+            for val in self.value:
+                str_vals += val.str_val()
+            return str_vals
+        else:
+            return str(self.value)
 
     def __str__(self):
         return str(self.value)
