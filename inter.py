@@ -99,6 +99,7 @@ class Inter:
             else:
                 self.error("Values not integer")
                 return
+
         if op == ';':
             if len(self.stack) < 1:
                 self.error('Not enough items on stack')
@@ -111,6 +112,20 @@ class Inter:
             new_arr = self.stack[amount_to_rem:]
             self.stack = self.stack[:amount_to_rem]
             self.stack.append(Token('array', new_arr))
+        if op == '@':
+            if len(self.stack) < 2:
+                self.error('Not enough items on stack')
+                return
+            index = self.pop()
+            arr = self.pop()
+            if index.type == 'integer' and arr.type == 'array':
+                try:
+                    self.stack.append(Token('integer', arr.value[index.value]))
+                except IndexError:
+                    self.error('Index out of range')
+            else:
+                self.error("Values not integer")
+                return
 
     def output(self):
         print("".join(list(map(lambda x: x.str_val(), self.stack))))
