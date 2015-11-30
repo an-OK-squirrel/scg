@@ -15,6 +15,12 @@ class Token:
     def __str__(self):
         return str(self.value)
 
+    def is_truthy(self):
+        if self.type == 'integer':
+            return self.value != 0
+        else:
+            return 0
+
 
 class Inter:
     def __init__(self):
@@ -143,11 +149,10 @@ class Inter:
             val = self.pop()
 
             if val.type == 'integer':
-                new = val.value
-                if new == 0:
-                    new = 1
-                else:
+                if val.is_truthy():
                     new = 0
+                else:
+                    new = 1
                 self.stack.append(Token('integer', new))
 
     def output(self):
