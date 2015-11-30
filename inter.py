@@ -97,7 +97,7 @@ class Inter:
             if exp.type == 'integer' and base.type == 'integer':
                 self.stack.append(Token('integer', base.value ** exp.value))
             else:
-                self.error("Values not integer")
+                self.error('Values not integer')
                 return
 
         if op == ';':
@@ -124,8 +124,16 @@ class Inter:
                 except IndexError:
                     self.error('Index out of range')
             else:
-                self.error("Values not integer")
+                self.error('Values not integer')
                 return
+        if op == '~':
+            if len(self.stack) < 1:
+                self.error('Not enough items on stack')
+                return
+            val = self.pop()
+
+            if val.type == 'integer':
+                self.stack.append(Token('ineger', -val.value))
 
     def output(self):
         print("".join(list(map(lambda x: x.str_val(), self.stack))))
