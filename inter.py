@@ -136,24 +136,33 @@ class Inter:
             if len(self.stack) < 1:
                 self.error('Not enough items on stack')
                 return
-            val = self.pop()
+            item = self.pop()
 
-            if val.type == 'integer':
-                self.stack.append(Token('ineger', -val.value))
+            if item.type == 'integer':
+                self.stack.append(Token('ineger', -item.value))
             else:
-                self.stack.append(val)
+                self.stack.append(item)
         if op == '!':
             if len(self.stack) < 1:
                 self.error('Not enough items on stack')
                 return
-            val = self.pop()
+            item = self.pop()
 
-            if val.type == 'integer':
-                if val.is_truthy():
+            if item.type == 'integer':
+                if item.is_truthy():
                     new = 0
                 else:
                     new = 1
                 self.stack.append(Token('integer', new))
+        if op == 'r':
+            if len(self.stack) < 1:
+                self.error('Not enough items on stack')
+                return
+            item = self.pop()
+            if item.type == 'integer':
+                array = map(lambda i: Token('integer', i),
+                            range(item.value))
+                self.stack.append(Token('array', array))
 
     def output(self):
         print("".join(list(map(lambda x: x.str_val(), self.stack))))
