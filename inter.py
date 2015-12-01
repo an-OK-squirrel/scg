@@ -12,6 +12,17 @@ class Token:
         else:
             return str(self.value)
 
+    def debug_val(self):
+        if self.type == 'array':
+            str_vals = '['
+            for val in self.value:
+                str_vals += val.str_val() + ' '
+            return str_vals[:-1] + ']'
+        elif self.type == 'string':
+            return '"' + self.value + '"'
+        else:
+            return str(self.value)
+
     def __str__(self):
         return str(self.value)
 
@@ -179,6 +190,8 @@ class Inter:
             else:
                 self.error('Values not integer')
                 return
+        if op == '.d':
+            self.debug()
 
     def output(self):
         print("".join(list(map(lambda x: x.str_val(), self.stack))))
@@ -193,5 +206,7 @@ class Inter:
         return self.stack.pop()
 
     def debug(self):
-        print('Stack: ' + str(list(map(str, self.stack))))
+        print('Stack: [' + ' '.
+              join(list(map(lambda x: x.debug_val(), self.stack)))
+              + ']')
         print('Array Markers: ' + str(self.arr_markers))
