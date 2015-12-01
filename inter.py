@@ -163,6 +163,22 @@ class Inter:
                 array = map(lambda i: Token('integer', i),
                             range(item.value))
                 self.stack.append(Token('array', array))
+            else:
+                self.error('Values not integer')
+                return
+        if op == '.r':
+            if len(self.stack) < 2:
+                self.error('Not enough items on stack')
+                return
+            last_index = self.pop()
+            first_index = self.pop()
+            if last_index.type == 'integer' and first_index.type == 'integer':
+                array = map(lambda i: Token('integer', i),
+                            range(first_index.value, last_index.value))
+                self.stack.append(Token('array', array))
+            else:
+                self.error('Values not integer')
+                return
 
     def output(self):
         print("".join(list(map(lambda x: x.str_val(), self.stack))))
