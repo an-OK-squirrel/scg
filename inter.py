@@ -192,6 +192,14 @@ class Inter:
                 return
         if op == '.d':
             self.debug()
+        if op == '\\':
+            if len(self.stack) < 2:
+                self.error('Not enough items on stack')
+                return
+            x = self.pop()
+            y = self.pop()
+            self.stack.append(x)
+            self.stack.append(y)
 
     def output(self):
         print("".join(list(map(lambda x: x.str_val(), self.stack))))
