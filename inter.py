@@ -207,6 +207,18 @@ class Inter:
             y = self.pop()
             self.stack.append(x)
             self.stack.append(y)
+        if op == 'm':
+            if len(self.stack) < 2:
+                self.error('Not enough items on stack')
+                return
+            block = self.pop()
+            array = self.pop()
+            if block.type == 'block' and array.type == 'array':
+                for item in array.value:
+                    self.stack.append(item)
+                    self.run_code(block.value)
+            else:
+                self.error('Argument m needs an array and a block')
 
     def output(self):
         print("".join(list(map(lambda x: x.str_val(), self.stack))))
