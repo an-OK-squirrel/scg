@@ -24,6 +24,7 @@ def split_into_st(program):
     result = []
     char_index = 0
     token_type = 0  # 0 is none, 1 is op, 2 is num, 3 is string
+    # 4 is block
     # actually, for that matter, what other types are there? derp, lots of them
     token = ''
 
@@ -49,6 +50,9 @@ def split_into_st(program):
             elif char == '"':
                 token_type = 3
                 token = '"'
+            elif char == '{':
+                token_type = 4
+                token = '{'
         elif token_type == 1:
             token += char
             result.append([token, token_type])
@@ -69,6 +73,14 @@ def split_into_st(program):
             if char == '"':
                 result.append([token, token_type])  # We don't want "abc",
                 # rather "abc
+                token = ''
+                token_type = 0
+            else:
+                token += char
+        elif token_type == 4:
+            if char == '}':
+                result.append([token, token_type])  # We don't want {123},
+                # rather {123
                 token = ''
                 token_type = 0
             else:
@@ -95,6 +107,10 @@ def parse_token_st(tokens):
         elif token_type == 3:
             result.append({'token_type': 'string',
                           'token_value': str(token[0][1:])})
+        elif token_type == 4:
+            result.append({'token_type': 'block',
+                          'token_value': parse_token_st(
+                          split_into_st(token[0][1:]))})
     return result
 
 replace_chars = {

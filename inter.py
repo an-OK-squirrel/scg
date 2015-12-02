@@ -50,6 +50,8 @@ class Inter:
                 self.do_operator(command['token_value'])
             if command['token_type'] == 'string':
                 self.stack.append(Token('string', command['token_value']))
+            if command['token_type'] == 'block':
+                self.stack.append(Token('block', command['token_value']))
 
     def do_operator(self, op):
         if op == '+':
@@ -165,6 +167,11 @@ class Inter:
                 else:
                     new = 1
                 self.stack.append(Token('integer', new))
+            elif item.type == 'block':
+                self.run_code(item.value)
+            else:
+                self.error('Invalid type')
+                return
         if op == 'r':
             if len(self.stack) < 1:
                 self.error('Not enough items on stack')
