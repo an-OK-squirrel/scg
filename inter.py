@@ -125,12 +125,9 @@ class Inter:
                 return
             self.pop()
         if op == '[':
-            self.arr_markers.append(len(self.stack))
+            self.start_array()
         if op == ']':
-            amount_to_rem = -(len(self.stack) - self.arr_markers.pop())
-            new_arr = self.stack[amount_to_rem:]
-            self.stack = self.stack[:amount_to_rem]
-            self.stack.append(Token('array', new_arr))
+            self.end_array()
         if op == '@':
             if len(self.stack) < 2:
                 self.error('Not enough items on stack')
@@ -214,9 +211,11 @@ class Inter:
             block = self.pop()
             array = self.pop()
             if block.type == 'block' and array.type == 'array':
+                self.start_array()
                 for item in array.value:
                     self.stack.append(item)
                     self.run_code(block.value)
+                self.end_array()
             else:
                 self.error('Argument m needs an array and a block')
 
@@ -237,3 +236,12 @@ class Inter:
               join(list(map(lambda x: x.debug_val(), self.stack)))
               + ']')
         print('Array Markers: ' + str(self.arr_markers))
+
+    def start_array(self):
+        self.arr_markers.append(len(self.stack))
+
+    def end_array(self):
+        amount_to_rem = -(len(self.stack) - self.arr_markers.pop())
+        new_arr = self.stack[amount_to_rem:]
+        self.stack = self.stack[:amount_to_rem]
+        self.stack.append(Token('array', new_arr))

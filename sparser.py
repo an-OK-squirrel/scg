@@ -42,7 +42,6 @@ def split_into_st(program):
                 token_type = 0
             elif char == '.' or char == '°':
                 token += '.'
-                print('hi')
                 token_type = 1
             elif char in DIGITS:
                 token += char
@@ -56,7 +55,6 @@ def split_into_st(program):
         elif token_type == 1:
             token += char
             result.append([token, token_type])
-            print(token)
             token = ''
             token_type = 0
         elif token_type == 2:
