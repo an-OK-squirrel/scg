@@ -218,6 +218,21 @@ class Inter:
                 self.end_array()
             else:
                 self.error('Argument m needs an array and a block')
+        if op == '%':
+            if len(self.stack) < 2:
+                self.error('Not enough items on stack')
+                return
+            y = self.pop()
+            x = self.pop()
+            if x.type == 'integer' and y.type == 'integer':
+                self.stack.append(Token('integer', x.value % y.value))
+            else:
+                self.error("Values not integer")
+                return
+        if op == 'd':
+            if len(self.stack) < 1:
+                self.error('Not enough items on stack')
+            self.stack.append(self.stack[-1])
 
     def output(self):
         print("".join(list(map(lambda x: x.str_val(), self.stack))))

@@ -6,7 +6,7 @@ L_LETTERS = 'abcdefghijklmnopqrstuvwxyz'
 U_LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 DIGITS = '0123456789'
 ALL_LETTERS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
-OPERATORS = L_LETTERS + '+*/-=^;[]@\\~!'
+OPERATORS = L_LETTERS + '+*/-=^;[]@\\~!%'
 WHITESPACE = ' \t'
 
 
