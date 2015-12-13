@@ -16,7 +16,7 @@ class Token:
         if self.type == 'array':
             str_vals = '['
             for val in self.value:
-                str_vals += val.str_val() + ' '
+                str_vals += val.debug_val() + ' '
             return str_vals[:-1] + ']'
         elif self.type == 'string':
             return '"' + self.value + '"'
@@ -24,7 +24,13 @@ class Token:
             return str(self.value)
 
     def __str__(self):
-        return str(self.value)
+        if self.type == 'array':
+            str_vals = ''
+            for val in self.value:
+                str_vals += val.str_val()
+            return str_vals
+        else:
+            return str(self.value)
 
     def is_truthy(self):
         if self.type == 'integer':
@@ -136,7 +142,8 @@ class Inter:
             arr = self.pop()
             if index.type == 'integer' and arr.type == 'array':
                 try:
-                    self.stack.append(Token('integer', arr.value[index.value]))
+                    self.stack.append(Token(arr.value[index.value].type,
+                                      arr.value[index.value].value))
                 except IndexError:
                     self.error('Index out of range')
             else:
