@@ -60,9 +60,9 @@ class Inter:
                 return
             y = self.pop()
             x = self.pop()
-            if x.type == 'integer' and y.type == 'integer':
+            if x.type == 'integer' and y.type == 'integer':  # add ints
                 self.stack.append(Token('integer', x.value + y.value))
-            elif x.type == 'string' or y.type == 'string':
+            elif x.type == 'string' or y.type == 'string':  # add strs
                 self.stack.append(Token('string', x.str_val() + y.str_val()))
         if op == '-':
             if len(self.stack) < 2:
@@ -70,7 +70,7 @@ class Inter:
                 return
             y = self.pop()
             x = self.pop()
-            if x.type == 'integer' and y.type == 'integer':
+            if x.type == 'integer' and y.type == 'integer':  # sub ints
                 self.stack.append(Token('integer', x.value - y.value))
             else:
                 self.error("Values not integer")
@@ -81,7 +81,7 @@ class Inter:
                 return
             y = self.pop()
             x = self.pop()
-            if x.type == 'integer' and y.type == 'integer':
+            if x.type == 'integer' and y.type == 'integer':  # multiply ints
                 self.stack.append(Token('integer', x.value * y.value))
             else:
                 self.error("Values not integer")
@@ -92,7 +92,7 @@ class Inter:
                 return
             y = self.pop()
             x = self.pop()
-            if x.type == 'integer' and y.type == 'integer':
+            if x.type == 'integer' and y.type == 'integer':  # div ints
                 self.stack.append(Token('integer', x.value / y.value))
             else:
                 self.error("Values not integer")
@@ -103,11 +103,11 @@ class Inter:
                 return
             y = self.pop()
             x = self.pop()
-            if x.value == y.value:
+            if x.value == y.value:  # test for equality
                 self.stack.append(Token('integer', 1))
             else:
                 self.stack.append(Token('integer', 0))
-        if op == '^':
+        if op == '^':  # exponents
             if len(self.stack) < 2:
                 self.error('Not enough items on stack')
                 return
@@ -119,7 +119,7 @@ class Inter:
                 self.error('Values not integer')
                 return
 
-        if op == ';':
+        if op == ';':  # delete items
             if len(self.stack) < 1:
                 self.error('Not enough items on stack')
                 return
@@ -148,7 +148,7 @@ class Inter:
                 return
             item = self.pop()
 
-            if item.type == 'integer':
+            if item.type == 'integer':  # invert integer
                 self.stack.append(Token('ineger', -item.value))
             else:
                 self.stack.append(item)
@@ -158,17 +158,18 @@ class Inter:
                 return
             item = self.pop()
 
-            if item.type == 'integer':
+            if item.type == 'integer':  # invert boolean
                 if item.is_truthy():
                     new = 0
                 else:
                     new = 1
                 self.stack.append(Token('integer', new))
-            elif item.type == 'block':
+            elif item.type == 'block':  # run block
                 self.run_code(item.value)
             else:
                 self.error('Invalid type')
                 return
+
         if op == 'r':
             if len(self.stack) < 1:
                 self.error('Not enough items on stack')
