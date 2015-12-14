@@ -58,6 +58,12 @@ class Inter:
                 self.stack.append(Token('string', command['token_value']))
             if command['token_type'] == 'block':
                 self.stack.append(Token('block', command['token_value']))
+            if command['token_type'] == 'setvar':
+                if len(self.stack) < 1:
+                    self.error('Not enough items on stack')
+                    return
+                to_set = self.stack[-1]
+                self.variables[command['token_value'][1]] = to_set
 
     def do_operator(self, op):
         if op == '+':
