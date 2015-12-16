@@ -64,6 +64,8 @@ class Inter:
                     return
                 to_set = self.stack[-1]
                 self.variables[command['token_value'][1]] = to_set
+            if command['token_type'] == 'getvar':
+                self.stack.append(self.variables[command['token_value'][0]])
 
     def do_operator(self, op):
         if op == '+':

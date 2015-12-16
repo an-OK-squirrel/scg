@@ -4,6 +4,7 @@ import re
 
 L_LETTERS = 'abcdefghijklmnopqrstuvwxyz'
 U_LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+VARIABLES = U_LETTERS
 DIGITS = '0123456789'
 ALL_LETTERS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 OPERATORS = L_LETTERS + '+*/-=^;[]@\\~!%'
@@ -24,7 +25,7 @@ def split_into_st(program):
     result = []
     char_index = 0
     token_type = 0  # 0 is none, 1 is op, 2 is num, 3 is string
-    # 4 is block, 5 is setvar.
+    # 4 is block, 5 is setvar, 6 is getvar
     token = ''
 
     while char_index < len(program):
@@ -36,6 +37,12 @@ def split_into_st(program):
             elif char in OPERATORS:  # Do things
                 token += char
                 token_type = 1
+                result.append([token, token_type])
+                token = ''  # reset
+                token_type = 0
+            elif char in VARIABLES:  # Do other things, much like normal things
+                token += char
+                token_type = 6
                 result.append([token, token_type])
                 token = ''  # reset
                 token_type = 0
@@ -54,7 +61,7 @@ def split_into_st(program):
             elif char == ':':
                 token_type = 5
                 token = ':'
-        elif token_type == 1 or token_type == 5:
+        elif token_type in [1, 5, 6]:
             token += char
             result.append([token, token_type])
             token = ''
@@ -113,6 +120,8 @@ def parse_token_st(tokens):
                           split_into_st(token[0][1:]))})
         elif token_type == 5:
             result.append({'token_type': 'setvar', 'token_value': token[0]})
+        elif token_type == 6:
+            result.append({'token_type': 'getvar', 'token_value': token[0]})
     return result
 
 replace_chars = {
