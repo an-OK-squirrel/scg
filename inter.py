@@ -69,7 +69,7 @@ class Inter:
         if op == '+':
             if len(self.stack) < 2:
                 self.error('Not enough items on stack')
-                return
+                exit()
             y = self.pop()
             x = self.pop()
             if x.type == 'integer' and y.type == 'integer':  # add ints
@@ -79,40 +79,40 @@ class Inter:
         if op == '-':
             if len(self.stack) < 2:
                 self.error('Not enough items on stack')
-                return
+                exit()
             y = self.pop()
             x = self.pop()
             if x.type == 'integer' and y.type == 'integer':  # sub ints
                 self.stack.append(Token('integer', x.value - y.value))
             else:
                 self.error("Values not integer")
-                return
+                exit()
         if op == '*':
             if len(self.stack) < 2:
                 self.error('Not enough items on stack')
-                return
+                exit()
             y = self.pop()
             x = self.pop()
             if x.type == 'integer' and y.type == 'integer':  # multiply ints
                 self.stack.append(Token('integer', x.value * y.value))
             else:
                 self.error("Values not integer")
-                return
+                exit()
         if op == '/':
             if len(self.stack) < 2:
                 self.error('Not enough items on stack')
-                return
+                exit()
             y = self.pop()
             x = self.pop()
             if x.type == 'integer' and y.type == 'integer':  # div ints
                 self.stack.append(Token('integer', x.value / y.value))
             else:
                 self.error("Values not integer")
-                return
+                exit()
         if op == '=':
             if len(self.stack) < 2:
                 self.error('Not enough items on stack')
-                return
+                exit()
             y = self.pop()
             x = self.pop()
             if x.value == y.value:  # test for equality
@@ -122,19 +122,19 @@ class Inter:
         if op == '^':  # exponents
             if len(self.stack) < 2:
                 self.error('Not enough items on stack')
-                return
+                exit()
             exp = self.pop()
             base = self.pop()
             if exp.type == 'integer' and base.type == 'integer':
                 self.stack.append(Token('integer', base.value ** exp.value))
             else:
                 self.error('Values not integer')
-                return
+                exit()
 
         if op == ';':  # delete items
             if len(self.stack) < 1:
                 self.error('Not enough items on stack')
-                return
+                exit()
             self.pop()
         if op == '[':
             self.start_array()
@@ -143,7 +143,7 @@ class Inter:
         if op == '@':
             if len(self.stack) < 2:
                 self.error('Not enough items on stack')
-                return
+                exit()
             index = self.pop()
             arr = self.pop()
             if index.type == 'integer' and arr.type == 'array':
@@ -152,13 +152,14 @@ class Inter:
                                       arr.value[index.value].value))
                 except IndexError:
                     self.error('Index out of range')
+                    exit()
             else:
                 self.error('Values not integer')
-                return
+                exit()
         if op == '~':
             if len(self.stack) < 1:
                 self.error('Not enough items on stack')
-                return
+                exit()
             item = self.pop()
 
             if item.type == 'integer':  # invert integer
@@ -168,7 +169,7 @@ class Inter:
         if op == '!':
             if len(self.stack) < 1:
                 self.error('Not enough items on stack')
-                return
+                exit()
             item = self.pop()
 
             if item.type == 'integer':  # invert boolean
@@ -181,12 +182,12 @@ class Inter:
                 self.run_code(item.value)
             else:
                 self.error('Invalid type')
-                return
+                exit()
 
         if op == 'r':
             if len(self.stack) < 1:
                 self.error('Not enough items on stack')
-                return
+                exit()
             item = self.pop()
             if item.type == 'integer':
                 array = map(lambda i: Token('integer', i),
@@ -194,11 +195,11 @@ class Inter:
                 self.stack.append(Token('array', array))
             else:
                 self.error('Values not integer')
-                return
+                exit()
         if op == '.r':
             if len(self.stack) < 2:
                 self.error('Not enough items on stack')
-                return
+                exit()
             last_index = self.pop()
             first_index = self.pop()
             if last_index.type == 'integer' and first_index.type == 'integer':
@@ -207,13 +208,13 @@ class Inter:
                 self.stack.append(Token('array', array))
             else:
                 self.error('Values not integer')
-                return
+                exit()
         if op == '.d':
             self.debug()
         if op == '\\':
             if len(self.stack) < 2:
                 self.error('Not enough items on stack')
-                return
+                exit()
             x = self.pop()
             y = self.pop()
             self.stack.append(x)
@@ -221,7 +222,7 @@ class Inter:
         if op == 'm':
             if len(self.stack) < 2:
                 self.error('Not enough items on stack')
-                return
+                exit()
             block = self.pop()
             array = self.pop()
             if block.type == 'block' and array.type == 'array':
@@ -235,17 +236,18 @@ class Inter:
         if op == '%':
             if len(self.stack) < 2:
                 self.error('Not enough items on stack')
-                return
+                exit()
             y = self.pop()
             x = self.pop()
             if x.type == 'integer' and y.type == 'integer':
                 self.stack.append(Token('integer', x.value % y.value))
             else:
                 self.error("Values not integer")
-                return
+                exit()
         if op == 'd':
             if len(self.stack) < 1:
                 self.error('Not enough items on stack')
+                exit()
             self.stack.append(self.stack[-1])
 
     def output(self):
