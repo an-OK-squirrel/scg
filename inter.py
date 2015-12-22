@@ -38,6 +38,9 @@ class Token:
         else:
             return 0
 
+    def array_vals(self):
+        return list(map(lambda t: t.value, self.value))
+
 
 class Inter:
     def __init__(self):
@@ -243,6 +246,12 @@ class Inter:
             x = self.pop()
             if x.type == 'integer' and y.type == 'integer':
                 self.stack.append(Token('integer', x.value % y.value))
+            elif x.type == 'array' and y.type == 'integer':
+                try:
+                    self.stack.append(Token('integer', x.array_vals().
+                                      index(y.value)))
+                except ValueError:
+                    self.stack.append(Token('integer', -1))
             else:
                 self.error("Values not integer")
                 exit()
