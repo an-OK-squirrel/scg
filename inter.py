@@ -260,6 +260,19 @@ class Inter:
                 self.error('Not enough items on stack')
                 exit()
             self.stack.append(self.stack[-1])
+        if op == 'j':
+            if len(self.stack) < 2:
+                self.error('Not enough items on stack')
+                exit()
+            join_with = self.pop()
+            array = self.pop()
+            if join_with.type == 'string' and array.type == 'array':
+                result = join_with.value.join(
+                    map(lambda x: x.str_val(), array.value))
+                self.stack.append(Token('string', result))
+            else:
+                self.error("Values not integer")
+                exit()
 
     def output(self):
         print("".join(list(map(lambda x: x.str_val(), self.stack))))
